@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Expo
+app/.expo/
+app/dist/
+app/web-build/
+app/expo-env.d.ts
+
+# Environment
+.env
+.env.local
+*.local
+
+# Google credentials (NUNCA commitar)
+sheets/credentials.json
+sheets/token.json
+
+# Sheets build
+sheets/dist/
+
+# OS
+.DS_Store
+*.log
+
+# IDE
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries
+.idea/shelf

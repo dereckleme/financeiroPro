@@ -1,0 +1,16 @@
+{
+  "name": "financeiro-pro-sheets",
+  "version": "1.0.0",
+  "description": "Scripts de configuração do Google Sheets",
+  "scripts": {
+    "setup": "ts-node setup.ts"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.9.2"
+  }
+}

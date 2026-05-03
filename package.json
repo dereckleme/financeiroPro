@@ -1,0 +1,7 @@
+{
+  "name": "financeiro-pro",
+  "version": "1.0.0",
+  "description": "App de controle financeiro integrado com Google Sheets",
+  "private": true,
+  "workspaces": ["app", "sheets"]
+}
