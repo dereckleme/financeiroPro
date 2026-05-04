@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../contexts/AuthContext';
-import { appendRow, getValues } from '../services/googleSheets';
+import { appendRow, getValues, updateAccountBalance } from '../services/googleSheets';
 import { Transaction, TransactionType } from '../types';
 import { generateId, nowISO } from '../utils/formatters';
-import { HEADERS, SHEET_NAMES } from '../../../sheets/schema';
+import { SHEET_NAMES } from '../../../sheets/schema';
 
 function rowToTransaction(row: string[]): Transaction {
   return {
@@ -39,7 +39,7 @@ export function useTransactions() {
   });
 }
 
-interface AddTransactionInput {
+export interface AddTransactionInput {
   data: string;
   descricao: string;
   valor: number;
@@ -55,7 +55,10 @@ export function useAddTransaction() {
 
   return useMutation({
     mutationFn: async (input: AddTransactionInput) => {
-      const row = [
+      const token = user!.accessToken;
+      const sid = user!.spreadsheetId!;
+
+      await appendRow(token, sid, SHEET_NAMES.TRANSACOES, [
         generateId(),
         input.data,
         input.descricao,
@@ -65,16 +68,15 @@ export function useAddTransaction() {
         input.conta_id,
         input.observacao ?? '',
         nowISO(),
-      ];
-      await appendRow(
-        user!.accessToken,
-        user!.spreadsheetId!,
-        SHEET_NAMES.TRANSACOES,
-        row,
-      );
+      ]);
+
+      // Atualiza saldo da conta automaticamente
+      const delta = input.tipo === 'receita' ? input.valor : -input.valor;
+      await updateAccountBalance(token, sid, input.conta_id, delta);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
     },
   });
 }

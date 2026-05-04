@@ -110,6 +110,20 @@ export async function initializeSpreadsheet(
   }
 }
 
+export async function updateAccountBalance(
+  token: string,
+  spreadsheetId: string,
+  contaId: string,
+  delta: number,
+): Promise<void> {
+  const rows = await getValues(token, spreadsheetId, `${SHEET_NAMES.CONTAS}!A2:E`);
+  const idx = rows.findIndex(r => r[0] === contaId);
+  if (idx === -1) return;
+  const current = parseFloat(rows[idx][4]) || 0;
+  const rowNum = idx + 2;
+  await updateRow(token, spreadsheetId, `${SHEET_NAMES.CONTAS}!E${rowNum}`, [current + delta]);
+}
+
 export async function findOrCreateSpreadsheet(token: string): Promise<string> {
   // Search for existing FinanceiroPro spreadsheet
   const searchUrl = `https://www.googleapis.com/drive/v3/files?q=name='FinanceiroPro'+and+mimeType='application/vnd.google-apps.spreadsheet'+and+trashed=false&fields=files(id,name)`;
