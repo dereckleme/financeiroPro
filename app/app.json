@@ -15,7 +15,16 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.financeiropro.app"
+      "bundleIdentifier": "com.financeiropro.app",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.236649482237-1ekec7t2jsbmak16gb4usdobk5cbv2r2"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

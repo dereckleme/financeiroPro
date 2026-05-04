@@ -3,7 +3,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
 import Constants from 'expo-constants';
 import { AuthUser } from '../types';
-import { findOrCreateSpreadsheet } from './googleSheets';
+export { findOrCreateSpreadsheet } from './googleSheets';
 
 WebBrowser.maybeCompleteAuthSession();
 
