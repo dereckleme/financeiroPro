@@ -95,7 +95,7 @@ export async function ensureSheet(
   }
 }
 
-export async function updateAccountBalance(
+export async function batchUpdate(
   token: string,
   spreadsheetId: string,
   requests: unknown[],
