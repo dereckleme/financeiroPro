@@ -70,6 +70,32 @@ export interface AuthUser {
   spreadsheetId?: string;
 }
 
+export type AutonomoStatus = 'pendente' | 'recebido';
+
+export interface AutonomoReceita {
+  id: string;
+  data: string;
+  descricao: string;
+  cliente: string;
+  valor: number;
+  status: AutonomoStatus;
+  conta_id: string;
+  criado_em: string;
+}
+
+export interface CLTConfig {
+  salario_bruto: number;
+  vr_diario: number;
+  dias_uteis: number;
+  va_mensal: number;
+  vt_mensal: number;
+  inss_override: number;
+  ir_override: number;
+  outros_descontos: number;
+  dia_pagamento: number;
+  conta_id: string;
+}
+
 export interface MonthSummary {
   receitas: number;
   despesas: number;

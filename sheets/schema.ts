@@ -5,6 +5,8 @@ export const SHEET_NAMES = {
   TRANSACOES: 'transacoes',
   ORCAMENTO: 'orcamento',
   METAS: 'metas',
+  TRABALHO_CLT: 'trabalho_clt',
+  AUTONOMO_RECEITAS: 'autonomo_receitas',
 } as const;
 
 export const HEADERS = {
@@ -14,6 +16,8 @@ export const HEADERS = {
   transacoes: ['id', 'data', 'descricao', 'valor', 'tipo', 'categoria_id', 'conta_id', 'observacao', 'criado_em'],
   orcamento: ['id', 'mes', 'ano', 'categoria_id', 'valor_planejado', 'criado_em'],
   metas: ['id', 'nome', 'valor_objetivo', 'valor_atual', 'data_objetivo', 'ativo', 'criado_em'],
+  trabalho_clt: ['chave', 'valor'],
+  autonomo_receitas: ['id', 'data', 'descricao', 'cliente', 'valor', 'status', 'conta_id', 'criado_em'],
 } as const;
 
 export const DEFAULT_CATEGORIES = [
@@ -30,3 +34,18 @@ export const DEFAULT_CATEGORIES = [
   { nome: 'Investimentos',  tipo: 'receita', cor: '#14b8a6', icone: '📈' },
   { nome: 'Outras Receitas',tipo: 'receita', cor: '#4f46e5', icone: '💵' },
 ] as const;
+
+export const CLT_CONFIG_KEYS = [
+  'salario_bruto',
+  'vr_diario',
+  'dias_uteis',
+  'va_mensal',
+  'vt_mensal',
+  'inss_override',
+  'ir_override',
+  'outros_descontos',
+  'dia_pagamento',
+  'conta_id',
+] as const;
+
+export type CLTConfigKey = typeof CLT_CONFIG_KEYS[number];

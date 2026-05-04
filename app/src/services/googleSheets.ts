@@ -54,7 +54,48 @@ export async function updateRow(
   await request(token, 'PUT', url, { values: [row] });
 }
 
-export async function batchUpdate(
+export async function writeValues(
+  token: string,
+  spreadsheetId: string,
+  range: string,
+  values: (string | number | boolean)[][],
+): Promise<void> {
+  const url = `${SHEETS_API}/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`;
+  await request(token, 'PUT', url, { values });
+}
+
+export async function clearRange(
+  token: string,
+  spreadsheetId: string,
+  range: string,
+): Promise<void> {
+  const url = `${SHEETS_API}/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}:clear`;
+  await request(token, 'POST', url, {});
+}
+
+export async function getSheetTitles(
+  token: string,
+  spreadsheetId: string,
+): Promise<string[]> {
+  const url = `${SHEETS_API}/spreadsheets/${spreadsheetId}?fields=sheets.properties.title`;
+  const data = await request<{ sheets: { properties: { title: string } }[] }>(token, 'GET', url);
+  return data.sheets.map(s => s.properties.title);
+}
+
+export async function ensureSheet(
+  token: string,
+  spreadsheetId: string,
+  title: string,
+  headers: string[],
+): Promise<void> {
+  const titles = await getSheetTitles(token, spreadsheetId);
+  if (!titles.includes(title)) {
+    await batchUpdate(token, spreadsheetId, [{ addSheet: { properties: { title } } }]);
+    await writeValues(token, spreadsheetId, `${title}!A1`, [headers]);
+  }
+}
+
+export async function updateAccountBalance(
   token: string,
   spreadsheetId: string,
   requests: unknown[],

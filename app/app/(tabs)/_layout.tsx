@@ -48,6 +48,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="work"
+        options={{
+          title: 'Trabalho',
+          tabBarIcon: tabIcon('briefcase', 'briefcase-outline'),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: 'Configurações',
